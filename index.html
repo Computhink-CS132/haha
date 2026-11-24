@@ -3,16 +3,100 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>My App</title>
+  <title>Finance Tracker</title>
   <link rel="icon" href="data:,">
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
   <main>
-    <h1>My App</h1>
-    <p class="tagline">Built at the Computhink AI Coding Camp.</p>
+    <h1>Finance Tracker</h1>
+    <p class="tagline">Plan a monthly budget that works for you.</p>
 
-    <!-- Your app goes here. Build it one Must at a time with Copilot. -->
+    <section class="card" aria-labelledby="income-heading">
+      <h2 id="income-heading">Monthly income</h2>
+      <form id="budget-form">
+        <label for="monthly-income">Your monthly income</label>
+        <div class="input-row">
+          <input
+            id="monthly-income"
+            name="monthly-income"
+            type="number"
+            min="0"
+            step="0.01"
+            inputmode="decimal"
+            required
+          >
+          <button type="submit">Get suggestion</button>
+        </div>
+      </form>
+
+      <div class="suggestion" aria-live="polite">
+        <h3>Suggested monthly budget</h3>
+        <p id="suggestion-text">Enter your income to see a suggestion.</p>
+        <p class="hint">The suggestion is 20% for income up to 5,000 and 30% above 5,000.</p>
+        <button id="accept-suggestion" type="button" disabled>Accept suggestion</button>
+      </div>
+      <p id="status-message" class="status-message" role="status" aria-live="polite"></p>
+    </section>
+
+    <section id="default-budget-section" class="card" aria-labelledby="default-heading" hidden>
+      <h2 id="default-heading">Your default budget</h2>
+      <p id="default-budget-text"></p>
+      <form id="default-budget-form">
+        <label for="default-budget-percent">Change your budget percentage</label>
+        <div class="input-row">
+          <input
+            id="default-budget-percent"
+            name="default-budget-percent"
+            type="number"
+            min="0"
+            max="100"
+            step="0.1"
+            inputmode="decimal"
+            required
+          >
+          <span class="input-suffix" aria-hidden="true">%</span>
+          <button type="submit">Save default</button>
+        </div>
+      </form>
+    </section>
+
+    <section class="card" aria-labelledby="expenses-heading">
+      <h2 id="expenses-heading">Expenses</h2>
+      <form id="expense-form">
+        <label for="expense-name">Expense name</label>
+        <div class="input-row expense-form-row">
+          <input
+            id="expense-name"
+            name="expense-name"
+            type="text"
+            maxlength="80"
+            required
+          >
+        </div>
+        <label for="expense-amount">Price</label>
+        <div class="input-row">
+          <input
+            id="expense-amount"
+            name="expense-amount"
+            type="number"
+            min="0"
+            step="0.01"
+            inputmode="decimal"
+            required
+          >
+          <button type="submit">Add expense</button>
+        </div>
+      </form>
+
+      <h3 class="expense-list-heading">Expenses to track</h3>
+      <p id="pending-expenses-empty" class="empty-state">No expenses to track yet.</p>
+      <ul id="pending-expenses" class="expense-list"></ul>
+
+      <h3 class="expense-list-heading">Expenses for this month</h3>
+      <p id="monthly-expenses-empty" class="empty-state">No monthly expenses yet.</p>
+      <ul id="monthly-expenses" class="expense-list"></ul>
+    </section>
   </main>
 
   <script src="script.js"></script>
