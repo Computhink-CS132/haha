@@ -22,7 +22,8 @@ _adults __ needs a finance tracker because they are unable to manage their month
   - Done when: I input income and I see _suggestions about_their income and a accept button which sets the suggestion as their default_.
 - Must 2: make a  expenses section below which they can input the prices  and names of their expenses.there is a checkbox next to their expenses and when they click on it,it will go into a section below which reads expenses for this month.there should also be a delete  button where they can delete their expenses.the delete button should be next to the checkbox for the expenses
   - Done when: I i type the expenses names and price in the and the delete button next to it ___ and I see that__it goes into the deleted expenses gets removed entirely and the named expenses with the price goes into the monthly expenses section_.
-- 
+- Must 3: show a warning when monthly expenses go over the budget, then check again every 5 minutes while they are still over.
+  - Done when: I can dismiss the centered warning, and a Settings option can turn off warnings after the first one.
 ## Later: do not build
 
 (MVP Plan Worksheet, Section 5)

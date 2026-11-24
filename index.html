@@ -9,8 +9,64 @@
 </head>
 <body>
   <main>
+    <div class="topbar">
+      <button id="settings-toggle" class="secondary-button" type="button" aria-expanded="false" aria-controls="settings-panel">
+        Settings
+      </button>
+    </div>
+    <section id="settings-panel" class="card settings-panel" aria-labelledby="settings-heading" hidden>
+      <h2 id="settings-heading">Settings</h2>
+      <label class="game-mode-setting" for="game-mode-toggle">
+        <input id="game-mode-toggle" type="checkbox">
+        <span>Game Mode</span>
+      </label>
+      <label class="game-mode-setting" for="repeat-budget-warning-toggle">
+        <input id="repeat-budget-warning-toggle" type="checkbox" checked>
+        <span>Repeat budget warning every 5 minutes</span>
+      </label>
+      <p id="settings-status" class="status-message" role="status" aria-live="polite"></p>
+    </section>
+
+    <dialog id="budget-warning" class="budget-warning-dialog" aria-labelledby="budget-warning-heading" aria-describedby="budget-warning-message">
+      <span class="budget-warning-symbol" aria-hidden="true">⚠️</span>
+      <h2 id="budget-warning-heading">Budget exceeded</h2>
+      <p id="budget-warning-message">Your monthly expenses are over your budget.</p>
+      <button id="dismiss-budget-warning" type="button">Dismiss</button>
+    </dialog>
+
+    <div id="finance-view">
     <h1>Finance Tracker</h1>
     <p class="tagline">Plan a monthly budget that works for you.</p>
+
+    <section class="card theme-card" aria-labelledby="theme-heading">
+      <h2 id="theme-heading">Choose a colour</h2>
+      <fieldset class="theme-picker">
+        <legend>Page colour</legend>
+        <div class="theme-options">
+          <label class="theme-option">
+            <input type="radio" name="color-theme" value="white" checked>
+            <span class="theme-swatch theme-swatch-white" aria-hidden="true"></span>
+            <span>White</span>
+          </label>
+          <label class="theme-option">
+            <input type="radio" name="color-theme" value="black">
+            <span class="theme-swatch theme-swatch-black" aria-hidden="true"></span>
+            <span>Black</span>
+          </label>
+          <label class="theme-option">
+            <input type="radio" name="color-theme" value="blue">
+            <span class="theme-swatch theme-swatch-blue" aria-hidden="true"></span>
+            <span>Blue</span>
+          </label>
+          <label class="theme-option">
+            <input type="radio" name="color-theme" value="green">
+            <span class="theme-swatch theme-swatch-green" aria-hidden="true"></span>
+            <span>Green</span>
+          </label>
+        </div>
+      </fieldset>
+      <p id="theme-status" class="status-message" role="status" aria-live="polite"></p>
+    </section>
 
     <section class="card" aria-labelledby="income-heading">
       <h2 id="income-heading">Monthly income</h2>
@@ -96,6 +152,77 @@
       <h3 class="expense-list-heading">Expenses for this month</h3>
       <p id="monthly-expenses-empty" class="empty-state">No monthly expenses yet.</p>
       <ul id="monthly-expenses" class="expense-list"></ul>
+    </section>
+    </div>
+
+    <section id="game-view" hidden aria-labelledby="games-heading">
+      <h1 id="games-heading">Games</h1>
+      <p class="tagline">Choose a game to play. Turn off Game Mode in Settings to return to your budget.</p>
+      <div id="game-menu" class="game-menu">
+        <button class="game-card" type="button" data-launch-game="snake">
+          <strong>Snake</strong>
+          <span>Eat the fruit and avoid the walls.</span>
+        </button>
+        <button class="game-card" type="button" data-launch-game="minesweeper">
+          <strong>Minesweeper</strong>
+          <span>Find every safe square without hitting a mine.</span>
+        </button>
+        <button class="game-card" type="button" data-launch-game="dino">
+          <strong>Chrome Dino</strong>
+          <span>Jump over the obstacles and keep running.</span>
+        </button>
+        <button class="game-card" type="button" data-launch-game="shooter">
+          <strong>3D Target Game</strong>
+          <span>Explore the maze and hit the robot targets.</span>
+        </button>
+      </div>
+
+      <section id="snake-game" class="card game-screen" hidden aria-labelledby="snake-heading">
+        <button class="back-to-games secondary-button" type="button">All games</button>
+        <h2 id="snake-heading">Snake</h2>
+        <p id="snake-status" class="game-status" role="status" aria-live="polite">Use the arrow keys or buttons to move.</p>
+        <canvas id="snake-canvas" class="game-canvas" width="400" height="400" aria-label="Snake game board"></canvas>
+        <div class="direction-pad" aria-label="Snake controls">
+          <button type="button" data-snake-direction="up" aria-label="Move up">Up</button>
+          <button type="button" data-snake-direction="left" aria-label="Move left">Left</button>
+          <button type="button" data-snake-direction="down" aria-label="Move down">Down</button>
+          <button type="button" data-snake-direction="right" aria-label="Move right">Right</button>
+        </div>
+        <button id="snake-restart" class="secondary-button" type="button">Restart Snake</button>
+      </section>
+
+      <section id="minesweeper-game" class="card game-screen" hidden aria-labelledby="minesweeper-heading">
+        <button class="back-to-games secondary-button" type="button">All games</button>
+        <h2 id="minesweeper-heading">Minesweeper</h2>
+        <p id="minesweeper-status" class="game-status" role="status" aria-live="polite"></p>
+        <button id="minesweeper-flag-mode" class="secondary-button" type="button" aria-pressed="false">Flag mode: off</button>
+        <div id="minesweeper-board" class="minesweeper-board" role="group" aria-label="Minesweeper board"></div>
+        <button id="minesweeper-restart" class="secondary-button" type="button">New game</button>
+      </section>
+
+      <section id="dino-game" class="card game-screen" hidden aria-labelledby="dino-heading">
+        <button class="back-to-games secondary-button" type="button">All games</button>
+        <h2 id="dino-heading">Chrome Dino</h2>
+        <p id="dino-status" class="game-status" role="status" aria-live="polite">Press Space or Jump to start.</p>
+        <canvas id="dino-canvas" class="game-canvas dino-canvas" width="640" height="220" aria-label="Dino running game"></canvas>
+        <button id="dino-jump" type="button">Jump</button>
+        <button id="dino-restart" class="secondary-button" type="button">Restart Dino</button>
+      </section>
+
+      <section id="shooter-game" class="card game-screen" hidden aria-labelledby="shooter-heading">
+        <button class="back-to-games secondary-button" type="button">All games</button>
+        <h2 id="shooter-heading">3D Target Game</h2>
+        <p id="shooter-status" class="game-status" role="status" aria-live="polite">Use W and S to move, A and D to turn, and Space to shoot.</p>
+        <canvas id="shooter-canvas" class="game-canvas shooter-canvas" width="720" height="400" aria-label="First-person maze with robot targets"></canvas>
+        <div class="shooter-controls" aria-label="Movement and shooting controls">
+          <button type="button" data-shooter-action="forward">Forward</button>
+          <button type="button" data-shooter-action="turn-left">Turn left</button>
+          <button type="button" data-shooter-action="backward">Back</button>
+          <button type="button" data-shooter-action="turn-right">Turn right</button>
+          <button type="button" data-shooter-action="shoot">Shoot</button>
+        </div>
+        <button id="shooter-restart" class="secondary-button" type="button">Restart game</button>
+      </section>
     </section>
   </main>
 

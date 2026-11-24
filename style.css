@@ -4,13 +4,81 @@
   box-sizing: border-box;
 }
 
+:root {
+  --page-background: #f5f7fa;
+  --surface: #fff;
+  --text: #1f2933;
+  --muted-text: #52606d;
+  --heading: #12355b;
+  --border: #d9e2ec;
+  --input-border: #9fb3c8;
+  --accent: #176b52;
+  --accent-hover: #10513e;
+  --suggestion-background: #f0f7f4;
+  --focus-ring: #f0b429;
+  --disabled-background: #829ab1;
+  --danger: #a61b1b;
+  --danger-hover: #7f1515;
+}
+
+body[data-theme="black"] {
+  --page-background: #111827;
+  --surface: #1f2937;
+  --text: #f9fafb;
+  --muted-text: #d1d5db;
+  --heading: #bfdbfe;
+  --border: #4b5563;
+  --input-border: #6b7280;
+  --accent: #2563eb;
+  --accent-hover: #1d4ed8;
+  --suggestion-background: #374151;
+  --focus-ring: #facc15;
+  --disabled-background: #6b7280;
+  --danger: #dc2626;
+  --danger-hover: #b91c1c;
+}
+
+body[data-theme="blue"] {
+  --page-background: #eaf3ff;
+  --surface: #fff;
+  --text: #172554;
+  --muted-text: #475569;
+  --heading: #1e40af;
+  --border: #bfdbfe;
+  --input-border: #93c5fd;
+  --accent: #1d4ed8;
+  --accent-hover: #1e40af;
+  --suggestion-background: #dbeafe;
+  --focus-ring: #f59e0b;
+  --disabled-background: #94a3b8;
+  --danger: #b91c1c;
+  --danger-hover: #991b1b;
+}
+
+body[data-theme="green"] {
+  --page-background: #eaf6ef;
+  --surface: #fff;
+  --text: #16352a;
+  --muted-text: #496458;
+  --heading: #176b52;
+  --border: #c6e2d2;
+  --input-border: #8fbaa1;
+  --accent: #176b52;
+  --accent-hover: #10513e;
+  --suggestion-background: #dcefe4;
+  --focus-ring: #f0b429;
+  --disabled-background: #829ab1;
+  --danger: #a61b1b;
+  --danger-hover: #7f1515;
+}
+
 body {
   margin: 0;
   font-family: system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
   font-size: 18px;
   line-height: 1.5;
-  color: #1f2933;
-  background: #f5f7fa;
+  color: var(--text);
+  background: var(--page-background);
 }
 
 main {
@@ -22,17 +90,17 @@ main {
 h1 {
   margin: 0 0 8px;
   font-size: clamp(2rem, 6vw, 2.5rem);
-  color: #12355b;
+  color: var(--heading);
 }
 
 .tagline {
   margin: 0 0 28px;
-  color: #52606d;
+  color: var(--muted-text);
 }
 
 h2 {
   margin: 0 0 18px;
-  color: #12355b;
+  color: var(--heading);
   font-size: 1.4rem;
 }
 
@@ -44,9 +112,9 @@ h3 {
 .card {
   margin-bottom: 20px;
   padding: 24px;
-  border: 1px solid #d9e2ec;
+  border: 1px solid var(--border);
   border-radius: 12px;
-  background: #fff;
+  background: var(--surface);
   box-shadow: 0 4px 14px rgb(18 53 91 / 6%);
 }
 
@@ -54,6 +122,74 @@ label {
   display: block;
   margin-bottom: 8px;
   font-weight: 600;
+}
+
+.theme-picker {
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+
+.theme-picker legend {
+  margin-bottom: 8px;
+  font-weight: 600;
+}
+
+.theme-options {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.theme-option {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 0;
+  padding: 8px 10px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.theme-option input {
+  flex: 0 0 auto;
+  width: 18px;
+  height: 18px;
+  min-width: 18px;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: transparent;
+  accent-color: var(--accent);
+}
+
+.theme-option:has(input:checked) {
+  border-color: var(--accent);
+}
+
+.theme-swatch {
+  width: 20px;
+  height: 20px;
+  border: 1px solid var(--border);
+  border-radius: 50%;
+}
+
+.theme-swatch-white {
+  background: #fff;
+}
+
+.theme-swatch-black {
+  background: #111827;
+}
+
+.theme-swatch-blue {
+  background: #2563eb;
+}
+
+.theme-swatch-green {
+  background: #176b52;
 }
 
 .input-row {
@@ -66,8 +202,10 @@ input {
   min-width: 0;
   flex: 1 1 180px;
   padding: 10px 12px;
-  border: 1px solid #9fb3c8;
+  border: 1px solid var(--input-border);
   border-radius: 6px;
+  color: var(--text);
+  background: var(--surface);
   font: inherit;
 }
 
@@ -76,7 +214,7 @@ button {
   padding: 9px 16px;
   border: 0;
   border-radius: 6px;
-  background: #176b52;
+  background: var(--accent);
   color: #fff;
   font: inherit;
   font-weight: 600;
@@ -84,17 +222,17 @@ button {
 }
 
 button:hover:not(:disabled) {
-  background: #10513e;
+  background: var(--accent-hover);
 }
 
 button:focus-visible,
 input:focus-visible {
-  outline: 3px solid #f0b429;
+  outline: 3px solid var(--focus-ring);
   outline-offset: 2px;
 }
 
 button:disabled {
-  background: #829ab1;
+  background: var(--disabled-background);
   cursor: not-allowed;
 }
 
@@ -102,7 +240,7 @@ button:disabled {
   margin-top: 24px;
   padding: 18px;
   border-radius: 8px;
-  background: #f0f7f4;
+  background: var(--suggestion-background);
 }
 
 .suggestion p,
@@ -112,7 +250,7 @@ button:disabled {
 
 .suggestion .hint {
   margin-bottom: 16px;
-  color: #52606d;
+  color: var(--muted-text);
   font-size: 0.9rem;
 }
 
@@ -127,7 +265,7 @@ button:disabled {
 
 .expense-list-heading {
   margin: 24px 0 8px;
-  color: #12355b;
+  color: var(--heading);
 }
 
 .expense-list {
@@ -142,7 +280,7 @@ button:disabled {
   justify-content: space-between;
   gap: 12px;
   padding: 12px 0;
-  border-top: 1px solid #d9e2ec;
+  border-top: 1px solid var(--border);
 }
 
 .expense-details {
@@ -175,22 +313,223 @@ button:disabled {
   flex: 0 0 auto;
   min-height: 40px;
   padding: 6px 12px;
-  background: #a61b1b;
+  background: var(--danger);
 }
 
 .delete-button:hover:not(:disabled) {
-  background: #7f1515;
+  background: var(--danger-hover);
 }
 
 .empty-state {
   margin: 0;
-  color: #52606d;
+  color: var(--muted-text);
 }
 
 .status-message {
   min-height: 1.5em;
   margin: 12px 0 0;
-  color: #52606d;
+  color: var(--muted-text);
+}
+
+.topbar {
+  display: flex;
+  justify-content: flex-start;
+  margin-bottom: 18px;
+}
+
+.secondary-button {
+  border: 1px solid var(--border);
+  background: var(--surface);
+  color: var(--text);
+}
+
+.secondary-button:hover:not(:disabled) {
+  background: var(--suggestion-background);
+}
+
+.settings-panel {
+  margin-bottom: 20px;
+}
+
+.settings-panel .game-mode-setting + .game-mode-setting {
+  display: flex;
+  margin-top: 12px;
+}
+
+.budget-warning-dialog {
+  width: min(420px, calc(100% - 32px));
+  padding: 28px;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  background: var(--surface);
+  color: var(--text);
+  text-align: center;
+  box-shadow: 0 12px 40px rgb(0 0 0 / 25%);
+}
+
+.budget-warning-dialog::backdrop {
+  background: rgb(0 0 0 / 45%);
+}
+
+.budget-warning-dialog h2 {
+  margin: 8px 0;
+}
+
+.budget-warning-dialog p {
+  margin: 0 0 20px;
+}
+
+.budget-warning-symbol {
+  display: block;
+  font-size: 3rem;
+  line-height: 1;
+}
+
+.game-mode-setting {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  margin: 0;
+  cursor: pointer;
+}
+
+.game-mode-setting input {
+  flex: 0 0 auto;
+  width: 22px;
+  height: 22px;
+  min-width: 22px;
+  margin: 0;
+  accent-color: var(--accent);
+}
+
+.game-menu {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 220px), 1fr));
+  gap: 14px;
+}
+
+.game-card {
+  display: flex;
+  min-height: 120px;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  gap: 8px;
+  padding: 18px;
+  text-align: left;
+}
+
+.game-card strong {
+  font-size: 1.15rem;
+}
+
+.game-card span {
+  font-size: 0.95rem;
+  font-weight: 400;
+}
+
+.game-screen {
+  margin-top: 20px;
+}
+
+.game-screen h2 {
+  margin-top: 18px;
+}
+
+.game-status {
+  min-height: 1.5em;
+  margin: 0 0 12px;
+  color: var(--muted-text);
+}
+
+.game-canvas {
+  display: block;
+  width: 100%;
+  height: auto;
+  margin: 0 auto 16px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: #e8f4ff;
+  image-rendering: pixelated;
+  touch-action: manipulation;
+}
+
+.dino-canvas {
+  background: #fbfbfb;
+}
+
+.shooter-canvas {
+  background: #c9e6f4;
+  cursor: crosshair;
+}
+
+.direction-pad {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(64px, 90px));
+  justify-content: center;
+  gap: 8px;
+  margin: 0 auto 14px;
+}
+
+.direction-pad button:first-child {
+  grid-column: 2;
+}
+
+.direction-pad button:nth-child(2) {
+  grid-column: 1;
+}
+
+.direction-pad button:nth-child(3) {
+  grid-column: 2;
+}
+
+.direction-pad button:nth-child(4) {
+  grid-column: 3;
+  grid-row: 2;
+}
+
+.minesweeper-board {
+  display: grid;
+  grid-template-columns: repeat(9, minmax(0, 1fr));
+  gap: 3px;
+  width: min(100%, 390px);
+  margin: 16px 0;
+}
+
+.minesweeper-cell {
+  min-width: 0;
+  min-height: 0;
+  aspect-ratio: 1;
+  padding: 0;
+  border-radius: 4px;
+  font-size: clamp(0.75rem, 4vw, 1.1rem);
+}
+
+.minesweeper-cell.revealed {
+  border: 1px solid var(--border);
+  background: var(--suggestion-background);
+  color: var(--text);
+}
+
+.minesweeper-cell.mine {
+  background: var(--danger);
+  color: #fff;
+}
+
+.minesweeper-cell[data-count="1"] {
+  color: #1d4ed8;
+}
+
+.minesweeper-cell[data-count="2"] {
+  color: #15803d;
+}
+
+.shooter-controls {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 8px;
+  margin-bottom: 14px;
 }
 
 [hidden] {
