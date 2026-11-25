@@ -5,157 +5,279 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Finance Tracker</title>
   <link rel="icon" href="data:,">
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="style.css?v=saving-tip-rotator">
 </head>
 <body>
   <main>
-    <div class="topbar">
+    <div class="topbar print-hide">
       <button id="settings-toggle" class="secondary-button" type="button" aria-expanded="false" aria-controls="settings-panel">
-        Settings
+        <span data-i18n="settings">Settings</span>
       </button>
+      <div class="language-picker">
+        <label for="language-select" class="language-label" data-i18n="language">Language</label>
+        <select id="language-select" aria-label="Language"></select>
+      </div>
     </div>
-    <section id="settings-panel" class="card settings-panel" aria-labelledby="settings-heading" hidden>
-      <h2 id="settings-heading">Settings</h2>
+    <section id="settings-panel" class="card settings-panel print-hide" aria-labelledby="settings-heading" hidden>
+      <h2 id="settings-heading" data-i18n="settings">Settings</h2>
       <label class="game-mode-setting" for="game-mode-toggle">
         <input id="game-mode-toggle" type="checkbox">
-        <span>Game Mode</span>
+        <span data-i18n="gameMode">Game Mode</span>
       </label>
       <label class="game-mode-setting" for="repeat-budget-warning-toggle">
         <input id="repeat-budget-warning-toggle" type="checkbox" checked>
-        <span>Repeat budget warning every 5 minutes</span>
+        <span data-i18n="repeatWarning">Repeat budget warning every 5 minutes</span>
       </label>
+      <label class="game-mode-setting" for="easy-reading-toggle">
+        <input id="easy-reading-toggle" type="checkbox">
+        <span data-i18n="easyReading">Easy Reading</span>
+      </label>
+      <label class="game-mode-setting" for="pause-animations-toggle">
+        <input id="pause-animations-toggle" type="checkbox">
+        <span data-i18n="pauseAnimations">Pause interface animations</span>
+      </label>
+      <div class="settings-select-row">
+        <label for="text-size-select" data-i18n="textSize">Text size</label>
+        <select id="text-size-select">
+          <option value="normal" data-i18n="normalText">Normal</option>
+          <option value="large" data-i18n="largeText">Large</option>
+          <option value="extra-large" data-i18n="extraLargeText">Extra large</option>
+        </select>
+      </div>
       <p id="settings-status" class="status-message" role="status" aria-live="polite"></p>
     </section>
 
-    <dialog id="budget-warning" class="budget-warning-dialog" aria-labelledby="budget-warning-heading" aria-describedby="budget-warning-message">
+    <dialog id="budget-warning" class="budget-warning-dialog print-hide" aria-labelledby="budget-warning-heading" aria-describedby="budget-warning-message">
       <span class="budget-warning-symbol" aria-hidden="true">⚠️</span>
-      <h2 id="budget-warning-heading">Budget exceeded</h2>
-      <p id="budget-warning-message">Your monthly expenses are over your budget.</p>
-      <button id="dismiss-budget-warning" type="button">Dismiss</button>
+      <h2 id="budget-warning-heading" data-i18n="budgetExceeded">Budget exceeded</h2>
+      <p id="budget-warning-message" data-i18n="budgetExceededMessage">Your monthly expenses are over your budget.</p>
+      <button id="dismiss-budget-warning" type="button" data-i18n="dismiss">Dismiss</button>
     </dialog>
 
     <div id="finance-view">
-    <h1>Finance Tracker</h1>
-    <p class="tagline">Plan a monthly budget that works for you.</p>
+    <h1 data-i18n="title">Finance Tracker</h1>
+    <p class="tagline" data-i18n="tagline">Plan a monthly budget that works for you.</p>
 
-    <section class="card theme-card" aria-labelledby="theme-heading">
-      <h2 id="theme-heading">Choose a colour</h2>
+    <section class="card theme-card print-hide" aria-labelledby="theme-heading">
+      <h2 id="theme-heading" data-i18n="chooseColour">Choose a colour</h2>
       <fieldset class="theme-picker">
-        <legend>Page colour</legend>
+        <legend data-i18n="pageColour">Page colour</legend>
         <div class="theme-options">
           <label class="theme-option">
             <input type="radio" name="color-theme" value="white" checked>
             <span class="theme-swatch theme-swatch-white" aria-hidden="true"></span>
-            <span>White</span>
+            <span data-i18n="white">White</span>
           </label>
           <label class="theme-option">
             <input type="radio" name="color-theme" value="black">
             <span class="theme-swatch theme-swatch-black" aria-hidden="true"></span>
-            <span>Black</span>
+            <span data-i18n="black">Black</span>
           </label>
           <label class="theme-option">
             <input type="radio" name="color-theme" value="blue">
             <span class="theme-swatch theme-swatch-blue" aria-hidden="true"></span>
-            <span>Blue</span>
+            <span data-i18n="blue">Blue</span>
           </label>
           <label class="theme-option">
             <input type="radio" name="color-theme" value="green">
             <span class="theme-swatch theme-swatch-green" aria-hidden="true"></span>
-            <span>Green</span>
+            <span data-i18n="green">Green</span>
+          </label>
+          <label class="theme-option">
+            <input type="radio" name="color-theme" value="high-contrast">
+            <span class="theme-swatch theme-swatch-high-contrast" aria-hidden="true"></span>
+            <span data-i18n="highContrast">High contrast</span>
           </label>
         </div>
       </fieldset>
       <p id="theme-status" class="status-message" role="status" aria-live="polite"></p>
     </section>
 
-    <section class="card" aria-labelledby="income-heading">
-      <h2 id="income-heading">Monthly income</h2>
-      <form id="budget-form">
-        <label for="monthly-income">Your monthly income</label>
-        <div class="input-row">
-          <input
-            id="monthly-income"
-            name="monthly-income"
-            type="number"
-            min="0"
-            step="0.01"
-            inputmode="decimal"
-            required
-          >
-          <button type="submit">Get suggestion</button>
-        </div>
-      </form>
+    <div class="finance-dashboard">
+      <div class="finance-main-column">
+        <section class="card print-hide" aria-labelledby="income-heading">
+          <h2 id="income-heading" data-i18n="monthlyIncome">Monthly income</h2>
+          <form id="budget-form">
+            <label for="monthly-income" data-i18n="incomeLabel">Your monthly income</label>
+            <div class="input-row">
+              <input
+                id="monthly-income"
+                name="monthly-income"
+                type="number"
+                min="0"
+                step="0.01"
+                inputmode="decimal"
+                required
+              >
+              <button type="submit" data-i18n="getSuggestion">Get suggestion</button>
+            </div>
+          </form>
 
-      <div class="suggestion" aria-live="polite">
-        <h3>Suggested monthly budget</h3>
-        <p id="suggestion-text">Enter your income to see a suggestion.</p>
-        <p class="hint">The suggestion is 20% for income up to 5,000 and 30% above 5,000.</p>
-        <button id="accept-suggestion" type="button" disabled>Accept suggestion</button>
+          <div class="suggestion" aria-live="polite">
+            <h3 data-i18n="suggestedBudget">Suggested monthly budget</h3>
+            <p id="suggestion-text">Enter your income to see a suggestion.</p>
+            <p class="hint" data-i18n="suggestionHint">The suggestion is 20% for income up to 5,000 and 30% above 5,000.</p>
+            <button id="accept-suggestion" type="button" disabled data-i18n="acceptSuggestion">Accept suggestion</button>
+          </div>
+          <p id="status-message" class="status-message" role="status" aria-live="polite"></p>
+        </section>
+
+        <section class="card" aria-labelledby="expenses-heading">
+          <h2 id="expenses-heading" data-i18n="expenses">Expenses</h2>
+          <form id="expense-form" class="print-hide">
+            <label for="expense-name" data-i18n="expenseName">Expense name</label>
+            <div class="input-row expense-form-row">
+              <input
+                id="expense-name"
+                name="expense-name"
+                type="text"
+                maxlength="80"
+                required
+              >
+            </div>
+            <label for="expense-category" data-i18n="expenseCategory">Category</label>
+            <div class="input-row expense-form-row">
+              <select id="expense-category" name="expense-category" required>
+                <option value="food" data-i18n="categoryFood">Food</option>
+                <option value="housing" data-i18n="categoryHousing">Housing</option>
+                <option value="transport" data-i18n="categoryTransport">Transport</option>
+                <option value="utilities" data-i18n="categoryUtilities">Utilities</option>
+                <option value="health" data-i18n="categoryHealth">Health</option>
+                <option value="other" data-i18n="categoryOther" selected>Other</option>
+              </select>
+            </div>
+            <label for="expense-amount" data-i18n="price">Price</label>
+            <div class="input-row">
+              <input
+                id="expense-amount"
+                name="expense-amount"
+                type="number"
+                min="0"
+                step="0.01"
+                inputmode="decimal"
+                required
+              >
+              <button type="submit" data-i18n="addExpense">Add expense</button>
+            </div>
+          </form>
+
+          <h3 id="pending-expenses-heading" class="expense-list-heading print-hide" data-i18n="trackExpenses">Expenses to track</h3>
+          <p id="pending-expenses-empty" class="empty-state print-hide" data-i18n="noTrack">No expenses to track yet.</p>
+          <ul id="pending-expenses" class="expense-list print-hide"></ul>
+
+          <h3 class="expense-list-heading" data-i18n="monthlyExpenses">Expenses for this month</h3>
+          <p id="monthly-expenses-empty" class="empty-state" data-i18n="noMonthly">No monthly expenses yet.</p>
+          <ul id="monthly-expenses" class="expense-list"></ul>
+          <button id="undo-delete-button" class="secondary-button print-hide" type="button" hidden data-i18n="undoDelete">
+            Undo last delete
+          </button>
+          <p id="expense-action-status" class="status-message print-hide" role="status" aria-live="polite"></p>
+        </section>
       </div>
-      <p id="status-message" class="status-message" role="status" aria-live="polite"></p>
-    </section>
 
-    <section id="default-budget-section" class="card" aria-labelledby="default-heading" hidden>
-      <h2 id="default-heading">Your default budget</h2>
-      <p id="default-budget-text"></p>
-      <form id="default-budget-form">
-        <label for="default-budget-percent">Change your budget percentage</label>
-        <div class="input-row">
-          <input
-            id="default-budget-percent"
-            name="default-budget-percent"
-            type="number"
-            min="0"
-            max="100"
-            step="0.1"
-            inputmode="decimal"
-            required
-          >
-          <span class="input-suffix" aria-hidden="true">%</span>
-          <button type="submit">Save default</button>
+      <aside id="default-budget-section" class="card finance-sidebar" aria-labelledby="default-heading">
+        <h2 id="default-heading" data-i18n="budgetOverview">Budget overview</h2>
+        <div class="budget-overview">
+          <div id="default-budget-details" hidden>
+            <p id="default-budget-text"></p>
+            <form id="default-budget-form">
+              <label for="default-budget-percent" data-i18n="changeBudget">Change your budget percentage</label>
+              <div class="input-row">
+                <input
+                  id="default-budget-percent"
+                  name="default-budget-percent"
+                  type="number"
+                  min="0"
+                  max="100"
+                  step="0.1"
+                  inputmode="decimal"
+                  required
+                >
+                <span class="input-suffix" aria-hidden="true">%</span>
+                <button type="submit" data-i18n="saveDefault">Save default</button>
+              </div>
+            </form>
+          </div>
+          <div class="budget-chart-card print-hide" aria-labelledby="budget-chart-heading">
+            <h3 id="budget-chart-heading" data-i18n="budgetUsed">Monthly budget used</h3>
+            <div
+              id="budget-pie-chart"
+              class="budget-pie-chart"
+              role="img"
+              aria-label="Budget usage chart"
+            >
+              <span id="budget-chart-percent">0%</span>
+            </div>
+            <p id="budget-chart-summary" class="budget-chart-summary" aria-live="polite"></p>
+            <div class="budget-chart-legend" aria-hidden="true">
+              <span><i class="budget-legend-used"></i>Used</span>
+              <span><i class="budget-legend-left"></i>Left</span>
+            </div>
+          </div>
+          <section class="budget-insight print-hide" aria-labelledby="weekly-guide-heading">
+            <h3 id="weekly-guide-heading" data-i18n="weeklyGuide">Weekly spending guide</h3>
+            <p id="weekly-spending-text" class="budget-insight-text" data-i18n="weeklyPrompt" aria-live="polite">
+              Enter income and save a budget to see your weekly guide.
+            </p>
+          </section>
+          <section class="budget-insight savings-goal" aria-labelledby="savings-goal-heading">
+            <h3 id="savings-goal-heading" data-i18n="savingsGoal">Savings goal</h3>
+            <form id="savings-goal-form" class="savings-goal-form print-hide">
+              <label for="savings-goal-name" data-i18n="goalName">Goal name</label>
+              <div class="input-row">
+                <input id="savings-goal-name" name="savings-goal-name" type="text" maxlength="60" required>
+              </div>
+              <label for="savings-goal-target" data-i18n="goalTarget">Target amount</label>
+              <div class="input-row">
+                <input
+                  id="savings-goal-target"
+                  name="savings-goal-target"
+                  type="number"
+                  min="0.01"
+                  step="0.01"
+                  inputmode="decimal"
+                  required
+                >
+              </div>
+              <label for="savings-goal-saved" data-i18n="goalSaved">Amount saved so far</label>
+              <div class="input-row">
+                <input
+                  id="savings-goal-saved"
+                  name="savings-goal-saved"
+                  type="number"
+                  min="0"
+                  step="0.01"
+                  inputmode="decimal"
+                  required
+                >
+              </div>
+              <button type="submit" data-i18n="saveGoal">Save savings goal</button>
+            </form>
+            <label id="savings-goal-progress-label" for="savings-goal-progress" data-i18n="goalProgress">Goal progress</label>
+            <progress id="savings-goal-progress" max="100" value="0" aria-labelledby="savings-goal-progress-label"></progress>
+            <p id="savings-goal-summary" class="budget-insight-text" aria-live="polite" data-i18n="goalPrompt">
+              Set a savings goal to see your progress.
+            </p>
+            <p id="savings-goal-status" class="status-message" role="status" aria-live="polite"></p>
+          </section>
+          <section class="budget-insight" aria-labelledby="monthly-summary-heading">
+            <h3 id="monthly-summary-heading" data-i18n="monthlySummary">Monthly summary</h3>
+            <p id="monthly-total-text" class="budget-insight-text" aria-live="polite"></p>
+            <p id="largest-expense-text" class="budget-insight-text" aria-live="polite"></p>
+            <button id="read-summary-button" class="secondary-button print-hide" type="button" data-i18n="readSummaryAloud">
+              Read summary aloud
+            </button>
+            <button id="print-summary-button" class="secondary-button print-hide" type="button" data-i18n="printSummary">
+              Print monthly summary
+            </button>
+            <p id="summary-read-status" class="status-message" role="status" aria-live="polite"></p>
+          </section>
         </div>
-      </form>
-    </section>
-
-    <section class="card" aria-labelledby="expenses-heading">
-      <h2 id="expenses-heading">Expenses</h2>
-      <form id="expense-form">
-        <label for="expense-name">Expense name</label>
-        <div class="input-row expense-form-row">
-          <input
-            id="expense-name"
-            name="expense-name"
-            type="text"
-            maxlength="80"
-            required
-          >
-        </div>
-        <label for="expense-amount">Price</label>
-        <div class="input-row">
-          <input
-            id="expense-amount"
-            name="expense-amount"
-            type="number"
-            min="0"
-            step="0.01"
-            inputmode="decimal"
-            required
-          >
-          <button type="submit">Add expense</button>
-        </div>
-      </form>
-
-      <h3 class="expense-list-heading">Expenses to track</h3>
-      <p id="pending-expenses-empty" class="empty-state">No expenses to track yet.</p>
-      <ul id="pending-expenses" class="expense-list"></ul>
-
-      <h3 class="expense-list-heading">Expenses for this month</h3>
-      <p id="monthly-expenses-empty" class="empty-state">No monthly expenses yet.</p>
-      <ul id="monthly-expenses" class="expense-list"></ul>
-    </section>
+      </aside>
+    </div>
     </div>
 
-    <section id="game-view" hidden aria-labelledby="games-heading">
+    <section id="game-view" class="print-hide" hidden aria-labelledby="games-heading">
       <h1 id="games-heading">Games</h1>
       <p class="tagline">Choose a game to play. Turn off Game Mode in Settings to return to your budget.</p>
       <div id="game-menu" class="game-menu">
@@ -174,6 +296,10 @@
         <button class="game-card" type="button" data-launch-game="shooter">
           <strong>3D Target Game</strong>
           <span>Explore the maze and hit the robot targets.</span>
+        </button>
+        <button class="game-card" type="button" data-launch-game="prism">
+          <strong>Prism Sprint</strong>
+          <span>Time your jumps through an original obstacle course.</span>
         </button>
       </div>
 
@@ -213,6 +339,15 @@
         <button class="back-to-games secondary-button" type="button">All games</button>
         <h2 id="shooter-heading">3D Target Game</h2>
         <p id="shooter-status" class="game-status" role="status" aria-live="polite">Use W and S to move, A and D to turn, and Space to shoot.</p>
+        <div class="shooter-hud">
+          <span id="shooter-score">Robots defeated: 0</span>
+          <div class="shooter-health">
+            <span id="shooter-health-label">Health: 100%</span>
+            <div class="shooter-health-track" role="progressbar" aria-label="Player health" aria-valuemin="0" aria-valuemax="100" aria-valuenow="100">
+              <div id="shooter-health-fill" class="shooter-health-fill"></div>
+            </div>
+          </div>
+        </div>
         <canvas id="shooter-canvas" class="game-canvas shooter-canvas" width="720" height="400" aria-label="First-person maze with robot targets"></canvas>
         <div class="shooter-controls" aria-label="Movement and shooting controls">
           <button type="button" data-shooter-action="forward">Forward</button>
@@ -223,9 +358,57 @@
         </div>
         <button id="shooter-restart" class="secondary-button" type="button">Restart game</button>
       </section>
+
+      <section id="prism-game" class="card game-screen" hidden aria-labelledby="prism-heading">
+        <button class="back-to-games secondary-button" type="button">All games</button>
+        <h2 id="prism-heading">Prism Sprint</h2>
+        <div id="prism-level-select" class="prism-level-select">
+          <p>Choose an original course:</p>
+          <div class="prism-level-options">
+            <button type="button" class="prism-level-card" data-prism-level="sunrise">
+              <strong>Sunrise Steps</strong>
+              <span>Easy · Gentle jumps and wide gaps</span>
+            </button>
+            <button type="button" class="prism-level-card" data-prism-level="canopy">
+              <strong>Canopy Run</strong>
+              <span>Medium · Platforms and changing heights</span>
+            </button>
+            <button type="button" class="prism-level-card" data-prism-level="night">
+              <strong>Neon Night</strong>
+              <span>Hard · Faster pace and tighter timing</span>
+            </button>
+            <button type="button" class="prism-level-card" data-prism-level="gravity">
+              <strong>Gravity Switch</strong>
+              <span>Switch gravity with F or Flip gravity to dodge new hazards</span>
+            </button>
+          </div>
+        </div>
+        <div id="prism-play-area" hidden>
+          <p id="prism-status" class="game-status" role="status" aria-live="polite">Jump over spikes, land on blocks, and jump again from platforms.</p>
+          <canvas id="prism-canvas" class="game-canvas prism-canvas" width="720" height="360" aria-label="Original auto-running jump game"></canvas>
+          <div id="prism-progress" class="prism-progress" role="progressbar" aria-label="Level progress" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
+            <div id="prism-progress-fill" class="prism-progress-fill"></div>
+          </div>
+          <p id="prism-progress-text" class="prism-progress-text">0% complete</p>
+          <div class="prism-controls">
+            <button id="prism-jump" type="button">Jump</button>
+            <button id="prism-flip" type="button" hidden>Flip gravity (F)</button>
+            <button id="prism-restart" class="secondary-button" type="button">Restart level</button>
+            <button id="prism-choose-level" class="secondary-button" type="button" hidden>Choose another level</button>
+          </div>
+        </div>
+      </section>
     </section>
   </main>
 
-  <script src="script.js"></script>
+  <aside id="saving-tip" class="saving-tip print-hide" aria-labelledby="saving-tip-heading" aria-live="polite">
+    <h2 id="saving-tip-heading" data-i18n="savingTipTitle">Money-saving tip</h2>
+    <div class="saving-tip-content">
+      <p id="saving-tip-text"></p>
+      <button id="saving-tip-next" class="secondary-button saving-tip-next" type="button" data-i18n="nextSavingTip">Next tip</button>
+    </div>
+  </aside>
+
+  <script src="script.js?v=saving-tip-rotator"></script>
 </body>
 </html>
